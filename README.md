@@ -1,5 +1,5 @@
 # MusicSearch RAG (POC Edition) — Project Specification
-readme version 2
+readme version 3
 
 ## 1. Product Vision
 
@@ -26,8 +26,11 @@ readme version 2
 ## 3. Business & System Requirements
 
 - **BR-01** Execute semantic audio/lyric queries and return matching song results.
+
 - **BR-02** Allow users to select and index a local music directory, extracting ID3 tags and lyrics.
+
 - **BR-03** Run fully self-hosted locally without external API dependencies or accounts.
+
 - **BR-04** Zero cost: run using local GPU resources.
 
 ---
@@ -50,6 +53,7 @@ Priorities: **M** = Must (MVP), **S** = Should, **C** = Could.
 
 The MVP is strictly focused on **Indexing + Vector Search + Displaying Matches**:
 1. Scan local folder and insert tracks into PostgreSQL.
+
 2. Generate vector embeddings for lyrics and metadata (with automatic metadata fallbacks for instrumental/lyricless tracks).
 3. Accept natural language queries in React, perform cosine distance search via `pgvector`, and display top matching tracks with file paths and match justifications.
 
@@ -72,8 +76,11 @@ The MVP is strictly focused on **Indexing + Vector Search + Displaying Matches**
 ## 7. Non-Functional Requirements
 
 - **NFR-01 Local Performance:** Fast vector similarity search across up to 1,000 tracks running on local hardware.
+
 - **NFR-02 Security (Single-User Local):** Application binds to `localhost` / `127.0.0.1` only. Authentication and multi-user isolation are intentionally omitted for the single-user POC.
+
 - **NFR-03 Easy Startup:** Run backend/database via Docker Compose and launch frontend via Vite (`npm run dev`).
+
 - **NFR-04 Desktop Target:** Optimized for desktop web browsers (Chrome, Firefox).
 
 ---
@@ -86,7 +93,7 @@ The MVP is strictly focused on **Indexing + Vector Search + Displaying Matches**
 | **Backend** | Python / Django + DRF | Handles directory scanning, API requests, and database queries |
 | **Database** | PostgreSQL + `pgvector` | Native vector storage for embeddings and track metadata |
 | **Embeddings** | `sentence-transformers` (`all-MiniLM-L6-v2`) | Lightweight Python embedding model running locally on CPU/GPU |
-| **LLM** | Ollama (subject to change) (Llama 3 / Qwen ) |
+| **LLM** | Ollama (subject to change) (Llama 3 / Qwen ) | Generates short match explanations ("Why this track matched") |
 | **Metadata** | `mutagen` | Python library for reading ID3/audio tags and lyrics |
 
 ---
@@ -95,9 +102,19 @@ The MVP is strictly focused on **Indexing + Vector Search + Displaying Matches**
 
 ### Models (subject to change)
 - **Track**: `id`, `title`, `artist`, `album`, `genre`, `year`, `file_path`, `lyrics_text` (nullable), `created_at`
+
 - **TrackEmbedding**: `id`, `track_id` (FK), `content_chunk`, `embedding_vector` (`vector(384)`), `chunk_type` (`lyric_plus_meta` or `meta_only`)
 
 ### Missing Lyrics Handling
 For instrumental tracks or songs lacking ID3 lyric tags, the ingestion pipeline generates a fallback search text combining `Title`, `Artist`, `Album`, `Genre`, and `Year`. This ensures all songs generate valid 384-dimensional vector embeddings and remain searchable by style, genre, or mood context.
 
 ---
+
+## 10. Project Schedule & Milestones
+
+| Stage | Period | Tasks | Milestone / Deliverable |
+|---|---|---|---|
+| **1. Definition & Setup** | Oct 20 – Nov 2, 2026 | T-01 – T-02 | Environment & repo running locally |
+| **2. Ingestion & Embeddings** | Nov 3 – Nov 23, 2026 | T-03 – T-04 | Local files indexed with vector embeddings |
+| **3. Search & Core UI (MVP)** | Nov 24 – Dec 21, 2026 | T-05 – T-06 | **POC Ready (Dec 21, 2026)** |
+| **4. Finalization** | Dec 22, 2026 – Jan 15, 2027 | T-07 | **Project Submission (Jan 15, 2027)** |
