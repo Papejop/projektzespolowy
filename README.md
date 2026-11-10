@@ -1,4 +1,5 @@
 # MusicSearch RAG (POC Edition) — Project Specification
+readme version 2
 
 ## 1. Product Vision
 
@@ -100,30 +101,3 @@ The MVP is strictly focused on **Indexing + Vector Search + Displaying Matches**
 For instrumental tracks or songs lacking ID3 lyric tags, the ingestion pipeline generates a fallback search text combining `Title`, `Artist`, `Album`, `Genre`, and `Year`. This ensures all songs generate valid 384-dimensional vector embeddings and remain searchable by style, genre, or mood context.
 
 ---
-
-## 10. Project Schedule
-
-```mermaid
-gantt
-    title MusicSearch RAG - Schedule (POC Edition)
-    dateFormat YYYY-MM-DD
-    axisFormat %b %d
-    tickInterval 1week
-    todayMarker off
-
-    section 1. Definition & Setup
-    T-01 Project selection & spec      :t01, 2026-11-10, 7d
-    T-02 Repository & environment setup:t02, after t01, 7d
-
-    section 2. Ingestion & Embeddings
-    T-03 Metadata & lyric scanner       :active, t03, after t02, 10d
-    T-04 Local embedding pipeline       :active, t04, after t03, 9d
-
-    section 3. Search & Core UI (MVP)
-    T-05 RAG retrieval endpoint (pgvector) :t05, after t04, 8d
-    T-06 React Search UI                :t06, after t05, 10d
-    POC Ready                           :milestone, crit, mvp, 2026-12-31, 0d
-
-    section 4. Finalization
-    T-07 1,000-track testing & tuning   :t07, after t06, 9d
-    Project Submission                  :milestone, crit, end, 2027-01-15, 0d
