@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 interface FilterDropdownProps {
   label: string;
   type?: 'dropdown' | 'slider';
@@ -8,6 +6,8 @@ interface FilterDropdownProps {
   max?: number;
   step?: number;
   unit?: string;
+  selectedValue: string | number | null;
+  onChange: (value: any) => void;
   isOpen: boolean;
   onToggle: () => void;
 }
@@ -20,22 +20,20 @@ export default function FilterDropdown({
   max = 100, 
   step = 1, 
   unit = '', 
+  selectedValue,
+  onChange,
   isOpen, 
   onToggle 
 }: FilterDropdownProps) {
-  
-  const [selectedValue, setSelectedValue] = useState<string | number | null>(null);
 
   const handleSelect = (option: string) => {
-    setSelectedValue(option);
+    onChange(option);
     onToggle();
-    console.log(`Wybrano filtr [${label}]:`, option);
   };
 
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = Number(e.target.value);
-    setSelectedValue(val);
-    console.log(`Zmieniono suwak [${label}]:`, val);
+    onChange(val);
   };
 
   const getButtonLabel = () => {
@@ -59,6 +57,16 @@ export default function FilterDropdown({
 
       {isOpen && (
         <div className="absolute left-0 mt-2 w-56 bg-[#181818] border border-zinc-600 rounded-xl shadow-2xl z-[9999] p-3">
+          
+          {selectedValue !== null && (
+            <button
+              onClick={() => { onChange(null); onToggle(); }}
+              className="w-full text-left px-2 py-1 mb-2 text-xs text-zinc-400 hover:text-white hover:bg-[#252525] rounded border-b border-zinc-800 cursor-pointer"
+            >
+              Wyczyść filtr
+            </button>
+          )}
+
           {type === 'slider' ? (
             <div className="space-y-3 py-2">
               <div className="flex justify-between text-xs text-zinc-400">
@@ -93,14 +101,7 @@ export default function FilterDropdown({
               ))}
             </div>
           )}
-        {selectedValue !== null && (
-            <button
-            onClick={() => { setSelectedValue(null); onToggle(); }}
-            className="w-full text-left px-2 py-1 mb-2 text-xs text-zinc-400 hover:text-white hover:bg-[#252525] rounded border-t border-zinc-800 cursor-pointer"
-            >
-            Clear filter
-            </button>
-        )}
+
         </div>
       )}
     </div>
