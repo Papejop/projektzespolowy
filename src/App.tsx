@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import CatalogTabs from './components/CatalogTabs';
 import SearchBar from './components/SearchBar';
+import FilterBar from './components/FilterBar';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>('internal');
@@ -21,8 +22,8 @@ export default function App() {
             onSearch={handleSearch} 
           />
         </div>
+        <FilterBar />
       </div>
-
     </div>
   );
 }
