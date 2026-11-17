@@ -1,0 +1,16 @@
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables & local databases
+.env
+db.sqlite3
+
+# Mock files / media
+mock_music_library/
