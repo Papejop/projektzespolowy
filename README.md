@@ -118,3 +118,31 @@ For instrumental tracks or songs lacking ID3 lyric tags, the ingestion pipeline 
 | **2. Ingestion & Embeddings** | Nov 3 – Nov 23, 2026 | T-03 – T-04 | Local files indexed with vector embeddings |
 | **3. Search & Core UI (MVP)** | Nov 24 – Dec 21, 2026 | T-05 – T-06 | **POC Ready (Dec 21, 2026)** |
 | **4. Finalization** | Dec 22, 2026 – Jan 15, 2027 | T-07 | **Project Submission (Jan 15, 2027)** |
+
+## 11. Project Gannt chart
+
+```mermaid
+gantt
+    title Harmonogram Projektu MusicSearch RAG (POC)
+    dateFormat YYYY-MM-DD
+    axisFormat %d.%m
+
+    section 1. Definition and Setup
+    T-01 Wybor pomyslu i specyfikacja :done, t1, 2026-10-20, 6d
+    T-02 Repo Django React Docker pgvector :active, t2, 2026-10-26, 7d
+    Etap 1 Srodowisko gotowe :milestone, m1, 2026-11-02, 0d
+
+    section 2. Ingestion and Embeddings
+    T-03 File Scanner MP3 FLAC mutagen :t3, 2026-11-03, 10d
+    T-04 Pipeline embeddingow i fallback :t4, 2026-11-11, 12d
+    Etap 2 Biblioteka zindeksowana :milestone, m2, 2026-11-23, 0d
+
+    section 3. Search and Core UI
+    T-05 Endpoint RAG pgvector Ollama :t5, 2026-11-24, 15d
+    T-06 React Search UI wyszukiwarka filtry :t6, 2026-12-05, 16d
+    Etap 3 POC Ready MVP :milestone, m3, 2026-12-21, 0d
+
+    section 4. Finalization
+    T-07 Testy wydajnosciowe 1000 utworow :t7, 2026-12-22, 24d
+    Etap 4 Oddanie projektu :milestone, m4, 2027-01-15, 0d
+```
